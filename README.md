@@ -18,3 +18,5 @@ I did spend about 3 hours on this. This was partly due to the AJAX SOP error men
 Design - there are always areas for improvement. Colorful backgrounds coupled with responsively scaled images would help a lot to entice users to stay on the page.
 
 Functionality - Having a working reply form that also did POST requests to the main JSON server to save the data would be better. Using a backend like Ruby on Rails or your CMS would be optimal, and the Javascript would act as a kind of JSON filter and parsers on top of that engine. 
+
+Having the JSON be continually checked (possibly on an increment set by the user) to be updated would be more optimal - again, ajax issues on my end prevented me delving further into that. 
