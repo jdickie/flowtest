@@ -1,0 +1,32 @@
+
+.topicheader {
+	margin: 1%;
+	
+}
+.clear {
+	clear: both;
+	overflow: hidden;
+}
+.response {
+	margin: 3%;
+	
+}
+
+@media screen and (min-width: < 600px) {
+	#main {
+		width: 400px;
+		min-height: 400px;
+		height: auto;
+	}
+}
+
+
+@media screen and (min-width: >= 800) {
+	#main {
+		width: 960px;
+		min-height: 800px;
+		border: 1px solid #000;
+		
+	}
+}
+
