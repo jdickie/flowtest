@@ -2,6 +2,9 @@ body {
 	font-family: "Helvetica", "Garamond", sans-serif;
 	font-size: 24px;
 }
+.topic {
+	margin-top: 13%;
+}
 .topicheader {
 	margin: 1%;
 	
@@ -11,8 +14,14 @@ body {
 	overflow: hidden;
 }
 .response {
+	min-height: 20%;
 	margin: 5%;
-	font-size: 50%;
+	font-size: 75%;
+	padding: 10px;
+}
+.response:hover {
+	background-color: #C0C0C0;
+	cursor: pointer;
 }
 .replybutton {
 	border: 1px solid #000;
@@ -23,10 +32,29 @@ body {
 	padding: 4px;
 	cursor: pointer;
 	text-align: center;
+	display: none;
 }
 .replybutton:hover {
 	cursor: pointer;
 	color: red;
+}
+#responseform {
+	background: #FFF;
+	width: 55%;
+	height: 55%;
+	padding: 4%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	border: 3px solid #000;
+}
+#responseform h2 {
+	font-size: 50%;
+}
+#submitform {
+	padding: 14%;
+	font-size: 60%;
+	cursor: pointer;
 }
  @media screen and (min-width: < 600px) {
 	#main {

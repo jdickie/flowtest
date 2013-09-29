@@ -998,17 +998,22 @@ var testdata =
 				// Cross-domain policy preventing getting URL for now, using testdata
 				this.parseData(testdata);
 				
-				// $.getJSON(url, function(data) {
-				// 					console.log("we got here: " + JSON.stringify(json));
-				// 				});
 			},
 			// Use data received in getData
 			parseData: function(json) {
 				var that = this;
-				$.each(json.topics, function(n, topic) {
-					that.displayTopic(that, n, topic);
-					});
 				
+				$.each(json.topics, function(n, topic) {
+					if(json.topics.length === (n-1)) {
+						$('#thread' + topic.responses[0].id).ready(function(e) {
+							console.log('last one ready');
+						});
+					}
+					that.displayTopic(that, n, topic);
+					
+				});
+				// Attach handler to form (Already loaded in DOM)
+				$('#submitform').on('click', this.closeReply);
 			},
 			// Displays a single thread - input is JSON object of thread
 			displayThread: function(tnum, thread) {
@@ -1016,12 +1021,14 @@ var testdata =
 				threadstring += '<div class="responsetext">' + thread.posttext + '</div>';
 				threadstring += '<div class="replybuttonarea"><div id="' + thread.id + 'reply" class="replybutton">Reply</div></div>';
 				threadstring += '</div>';
+				
 				return threadstring;
 			},
 			// input: json object of topic
 			displayTopic: function(obj, index, topic) {
 				var that = obj,
-				topicstring = '<div class="topic"><div class="topicheader">' + topic.topictitle + 
+				topicid = 'topic' + index;
+				topicstring = '<div id="' + topicid + '" class="topic"><div class="topicheader">' + topic.topictitle + 
 				'</div><div class="topic-responses">',
 				margin = 15;
 				// Go through threads
@@ -1031,16 +1038,31 @@ var testdata =
 				
 				topicstring += '</div>';
 				$(id).append(topicstring);
+				$('#' + topicid + ' .response').on('mouseout', that.threadOut);
+				$('#' + topicid + ' .response').on('mouseover', that.threadHover);
+				$('#' + topicid + ' .response').on('click', that.replyThread);
 			},
 			// Display Reply button on mouseover/hover
 			threadHover: function(e) {
-				$(this).find('.replybuttonarea').show();
+				$(this).find('.replybutton').show();
 			},
 			threadOut: function(e) {
-				$(this).find('.replybuttonarea').hide();
+				$(this).find('.replybutton').hide();
 			},
 			replyThread: function(e) {
-				// Get current 'age' of thread
+				// Get current user x, y and put thread form there
+				var offset = $(this).offset(), 
+				userx = parseInt((offset.left + ($('#responseform').width()/4)),10),
+				usery = parseInt((offset.top), 10);
+				console.log('clicked reply ' + userx);
+				//  Display form in x, y area
+				$('#responseform').css('left', (userx + 'px'));
+				$('#responseform').css('top', (usery + 'px'));
+				$('#responseform').show();
+				
+			},
+			closeReply: function(e) {
+				$('#responseform').hide();
 			}
 		};
 	};
