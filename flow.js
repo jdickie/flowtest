@@ -1004,34 +1004,43 @@ var testdata =
 			},
 			// Use data received in getData
 			parseData: function(json) {
-				
-				$.each(json.topics, this.displayTopic);
+				var that = this;
+				$.each(json.topics, function(n, topic) {
+					that.displayTopic(that, n, topic);
+					});
 				
 			},
+			// Displays a single thread - input is JSON object of thread
+			displayThread: function(tnum, thread) {
+				var threadstring = '<div id="thread' + thread.id + '" class="response"><div class="responseheader">' + thread.age + '</div>';
+				threadstring += '<div class="responsetext">' + thread.posttext + '</div>';
+				threadstring += '<div class="replybuttonarea"><div id="' + thread.id + 'reply" class="replybutton">Reply</div></div>';
+				threadstring += '</div>';
+				return threadstring;
+			},
 			// input: json object of topic
-			displayTopic: function(index, topic) {
-				
-				var topicstring = '<div class="topic"><div class="topicheader">' + topic.topictitle + 
+			displayTopic: function(obj, index, topic) {
+				var that = obj,
+				topicstring = '<div class="topic"><div class="topicheader">' + topic.topictitle + 
 				'</div><div class="topic-responses">',
 				margin = 15;
-				
-				
-				
 				// Go through threads
 				$.each(topic.responses, function(i,o) {
-					
-					
-					topicstring += '<div class="response"><div class="responseheader">' + o.age + '</div>';
-					topicstring += '<div class="responsetext">' + o.posttext + '</div>';
-					topicstring += '</div>'
+					topicstring += that.displayThread(i,o);
 				});
 				
 				topicstring += '</div>';
 				$(id).append(topicstring);
 			},
-			// Displays a single thread - input is JSON object of thread
-			displayThread: function(tnum, thread) {
-				
+			// Display Reply button on mouseover/hover
+			threadHover: function(e) {
+				$(this).find('.replybuttonarea').show();
+			},
+			threadOut: function(e) {
+				$(this).find('.replybuttonarea').hide();
+			},
+			replyThread: function(e) {
+				// Get current 'age' of thread
 			}
 		};
 	};
